@@ -114,3 +114,30 @@ struct proc_ops *get_proc_ops(struct proc_dir_entry *node)
     return *get_member_ptr(node, proc_ops_offset, struct proc_ops *);
 }
 
+int cmp(char *x, char *y)
+{
+    if (strlen(x) != strlen(y))
+        return (int)strlen(x) - (int)strlen(y);
+    return strcmp(x, y);
+}
+
+
+struct proc_dir_entry *find_child(struct proc_dir_entry *parent, char *name)
+{
+    if (!parent || !name)
+        return NULL;
+
+    struct rb_node *node = get_member_ptr(parent, subdir_offset, struct rb_root)->rb_node;
+    while (node) {
+        int k = cmp(name, *get_member_ptr(node, -subdir_node_offset + name_offset, char *));
+        printk("%s\n", *get_member_ptr(node, -subdir_node_offset + name_offset, char *));
+        if (k < 0)
+            node = node->rb_left;
+        else if (k > 0)
+            node = node->rb_right;
+        else
+            return get_member_ptr(node, -subdir_node_offset, struct proc_dir_entry);
+    }
+
+    return NULL;
+}

@@ -25,5 +25,13 @@ char *get_name(struct proc_dir_entry *node);
 /**
  * Get the proc_ops of the node
  */
-struct proc_ops *get_proc_ops(struct proc_dir_entry *node)
+struct proc_ops *get_proc_ops(struct proc_dir_entry *node);
 
+/**
+ * Find the child with the specific name
+ * @parent: the proc_dir_entry structure of parent
+ * @s: string would be inserted
+ *
+ * Return: return a pointer to the child structure of NULL if not found
+ */
+struct proc_dir_entry *find_child(struct proc_dir_entry *parent, char *name);
