@@ -98,3 +98,19 @@ REMOVE:
     proc_remove(parent);
 DONE:
 }
+
+struct proc_dir_entry *get_proc_root(void)
+{
+    return proc_root;
+}
+
+char *get_name(struct proc_dir_entry *node)
+{
+    return *get_member_ptr(node, name_offset, char *);
+}
+
+struct proc_ops *get_proc_ops(struct proc_dir_entry *node)
+{
+    return *get_member_ptr(node, proc_ops_offset, struct proc_ops *);
+}
+
