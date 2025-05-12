@@ -41,3 +41,14 @@ ERR2:
 ERR1:
     vfree(new_hook);
 }
+
+void hook_release(void)
+{
+    struct hook *now, *safe;
+    list_for_each_entry_safe (now, safe, &hook_list, list) {
+        unregister_ftrace_function(&now->ops);
+        ftrace_set_filter_ip(&now->ops, now->org_func, 1, 0);
+        list_del(&now->list);
+        vfree(now);
+    }
+}
