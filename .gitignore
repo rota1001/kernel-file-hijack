@@ -56,3 +56,5 @@ vmlinuz-6.11.0-25-generic
 rootfs.ext2
 
 .vscode/*
+
+user
