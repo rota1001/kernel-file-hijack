@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+run.sh
+vmlinuz-6.11.0-25-generic
+rootfs.ext2
+
+.vscode/*
