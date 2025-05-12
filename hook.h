@@ -1,5 +1,6 @@
-#include <linux/list.h>
+#pragma once
 #include <linux/ftrace.h>
+#include <linux/list.h>
 
 struct hook {
     unsigned long org_func;

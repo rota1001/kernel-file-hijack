@@ -1,3 +1,4 @@
+#pragma once
 #include <linux/limits.h>
 #include <linux/proc_fs.h>
 #include <linux/string.h>
@@ -36,7 +37,8 @@ struct proc_ops *proc_get_ops(struct proc_dir_entry *node);
  *
  * Return: return a pointer to the child structure of NULL if not found
  */
-struct proc_dir_entry *proc_find_child(struct proc_dir_entry *parent, char *name);
+struct proc_dir_entry *proc_find_child(struct proc_dir_entry *parent,
+                                       char *name);
 
 /**
  * Find the `proc_dir_entry` by path
@@ -45,7 +47,7 @@ struct proc_dir_entry *proc_find_by_path(char *path);
 
 /**
  * List the files and directories with printk.
- * 
+ *
  * This is for debug purpose.
  */
 void proc_list_dir(char *path);
