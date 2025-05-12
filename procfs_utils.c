@@ -122,7 +122,8 @@ int cmp(char *x, char *y)
 }
 
 
-struct proc_dir_entry *proc_find_child(struct proc_dir_entry *parent, char *name)
+struct proc_dir_entry *proc_find_child(struct proc_dir_entry *parent,
+                                       char *name)
 {
     if (!parent || !name)
         return NULL;
@@ -165,4 +166,22 @@ struct proc_dir_entry *proc_find_by_path(char *path)
     }
 
     return now;
+}
+
+void dfs(struct rb_node *node)
+{
+    if (!node)
+        return;
+    dfs(node->rb_left);
+    printk("proc_list_dir: %s\n",
+           *get_member_ptr(node, -subdir_node_offset + name_offset, char *));
+    dfs(node->rb_right);
+}
+
+void proc_list_dir(char *path)
+{
+    struct proc_dir_entry *entry = proc_find_by_path(path);
+    if (!entry)
+        return;
+    dfs(get_member_ptr(entry, subdir_offset, struct rb_root)->rb_node);
 }

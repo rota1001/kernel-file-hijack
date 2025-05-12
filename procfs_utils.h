@@ -42,3 +42,10 @@ struct proc_dir_entry *proc_find_child(struct proc_dir_entry *parent, char *name
  * Find the `proc_dir_entry` by path
  */
 struct proc_dir_entry *proc_find_by_path(char *path);
+
+/**
+ * List the files and directories with printk.
+ * 
+ * This is for debug purpose.
+ */
+void proc_list_dir(char *path);
