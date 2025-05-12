@@ -99,17 +99,17 @@ REMOVE:
 DONE:
 }
 
-struct proc_dir_entry *get_proc_root(void)
+struct proc_dir_entry *proc_get_root(void)
 {
     return proc_root;
 }
 
-char *get_name(struct proc_dir_entry *node)
+char *proc_get_name(struct proc_dir_entry *node)
 {
     return *get_member_ptr(node, name_offset, char *);
 }
 
-struct proc_ops *get_proc_ops(struct proc_dir_entry *node)
+struct proc_ops *proc_get_ops(struct proc_dir_entry *node)
 {
     return *get_member_ptr(node, proc_ops_offset, struct proc_ops *);
 }
@@ -122,7 +122,7 @@ int cmp(char *x, char *y)
 }
 
 
-struct proc_dir_entry *find_child(struct proc_dir_entry *parent, char *name)
+struct proc_dir_entry *proc_find_child(struct proc_dir_entry *parent, char *name)
 {
     if (!parent || !name)
         return NULL;
@@ -148,7 +148,7 @@ struct proc_dir_entry *find_child(struct proc_dir_entry *parent, char *name)
 
 static char buf[PATH_MAX];
 
-struct proc_dir_entry *find_by_path(char *path)
+struct proc_dir_entry *proc_find_by_path(char *path)
 {
     if (strncmp(path, "/proc", 5) || strlen(path) > PATH_MAX)
         return NULL;
@@ -159,7 +159,7 @@ struct proc_dir_entry *find_by_path(char *path)
     struct proc_dir_entry *now = proc_root;
     while ((token = strsep(&pos, "/")) != NULL) {
         printk("path: %s\n", token);
-        now = find_child(now, token);
+        now = proc_find_child(now, token);
         if (!now)
             break;
     }

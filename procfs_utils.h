@@ -17,17 +17,17 @@ void proc_find_init(void);
 /**
  * Get the `proc_dir_entry` of the root
  */
-struct proc_dir_entry *get_proc_root(void);
+struct proc_dir_entry *proc_get_root(void);
 
 /**
  * Get the name of the node
  */
-char *get_name(struct proc_dir_entry *node);
+char *proc_get_name(struct proc_dir_entry *node);
 
 /**
  * Get the proc_ops of the node
  */
-struct proc_ops *get_proc_ops(struct proc_dir_entry *node);
+struct proc_ops *proc_get_ops(struct proc_dir_entry *node);
 
 /**
  * Find the child with the specific name
@@ -36,9 +36,9 @@ struct proc_ops *get_proc_ops(struct proc_dir_entry *node);
  *
  * Return: return a pointer to the child structure of NULL if not found
  */
-struct proc_dir_entry *find_child(struct proc_dir_entry *parent, char *name);
+struct proc_dir_entry *proc_find_child(struct proc_dir_entry *parent, char *name);
 
 /**
  * Find the `proc_dir_entry` by path
  */
-struct proc_dir_entry *find_by_path(char *path);
+struct proc_dir_entry *proc_find_by_path(char *path);
