@@ -117,7 +117,7 @@ struct proc_ops *get_proc_ops(struct proc_dir_entry *node)
 int cmp(char *x, char *y)
 {
     if (strlen(x) != strlen(y))
-        return (int)strlen(x) - (int)strlen(y);
+        return (int) strlen(x) - (int) strlen(y);
     return strcmp(x, y);
 }
 
@@ -127,17 +127,42 @@ struct proc_dir_entry *find_child(struct proc_dir_entry *parent, char *name)
     if (!parent || !name)
         return NULL;
 
-    struct rb_node *node = get_member_ptr(parent, subdir_offset, struct rb_root)->rb_node;
+    struct rb_node *node =
+        get_member_ptr(parent, subdir_offset, struct rb_root)->rb_node;
     while (node) {
-        int k = cmp(name, *get_member_ptr(node, -subdir_node_offset + name_offset, char *));
-        printk("%s\n", *get_member_ptr(node, -subdir_node_offset + name_offset, char *));
+        int k = cmp(name, *get_member_ptr(
+                              node, -subdir_node_offset + name_offset, char *));
+        printk("%s\n", *get_member_ptr(node, -subdir_node_offset + name_offset,
+                                       char *));
         if (k < 0)
             node = node->rb_left;
         else if (k > 0)
             node = node->rb_right;
         else
-            return get_member_ptr(node, -subdir_node_offset, struct proc_dir_entry);
+            return get_member_ptr(node, -subdir_node_offset,
+                                  struct proc_dir_entry);
     }
 
     return NULL;
+}
+
+static char buf[PATH_MAX];
+
+struct proc_dir_entry *find_by_path(char *path)
+{
+    if (strncmp(path, "/proc", 5) || strlen(path) > PATH_MAX)
+        return NULL;
+
+    strncpy(buf, path, PATH_MAX);
+    char *token;
+    char *pos = buf + 6;
+    struct proc_dir_entry *now = proc_root;
+    while ((token = strsep(&pos, "/")) != NULL) {
+        printk("path: %s\n", token);
+        now = find_child(now, token);
+        if (!now)
+            break;
+    }
+
+    return now;
 }

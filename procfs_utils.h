@@ -1,4 +1,6 @@
+#include <linux/limits.h>
 #include <linux/proc_fs.h>
+#include <linux/string.h>
 
 /**
  * Calculate offset of element in proc_dir_entry
@@ -35,3 +37,8 @@ struct proc_ops *get_proc_ops(struct proc_dir_entry *node);
  * Return: return a pointer to the child structure of NULL if not found
  */
 struct proc_dir_entry *find_child(struct proc_dir_entry *parent, char *name);
+
+/**
+ * Find the `proc_dir_entry` by path
+ */
+struct proc_dir_entry *find_by_path(char *path);
